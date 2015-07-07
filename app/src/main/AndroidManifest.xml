@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:exported="false"
             android:name=".About"
             android:label="@string/about">
             <meta-data

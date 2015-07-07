@@ -12,13 +12,20 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 
+import net.youmi.android.AdManager;
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
+import net.youmi.android.banner.AdViewListener;
+
 public class About extends AppCompatActivity implements View.OnClickListener
 {
+
     private ProgressDialog dialog;
 
     @Override
@@ -26,7 +33,7 @@ public class About extends AppCompatActivity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-
+        AdManager.getInstance(this).setEnableDebugLog(false);
         //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
@@ -66,6 +73,34 @@ public class About extends AppCompatActivity implements View.OnClickListener
         group.setText(q);
         //设置TextView可点击
         group.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //广告
+        // 实例化广告条
+        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+        // 获取要嵌入广告条的布局
+        LinearLayout adLayout = (LinearLayout) findViewById(R.id.adLayout);
+        // 将广告条加入到布局中
+        adLayout.addView(adView);
+        adView.setAdListener(new AdViewListener()
+        {
+            @Override
+            public void onSwitchedAd(AdView adView)
+            {
+                // 切换广告并展示
+            }
+
+            @Override
+            public void onReceivedAd(AdView adView)
+            {
+                // 请求广告成功
+            }
+
+            @Override
+            public void onFailedToReceivedAd(AdView adView)
+            {
+                // 请求广告失败
+            }
+        });
     }
 
     public void onClick(View v)

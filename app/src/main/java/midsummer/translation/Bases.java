@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 
+import net.youmi.android.AdManager;
+
 public class Bases extends AppCompatActivity
 {
     private String lett = "";
@@ -65,7 +67,11 @@ public class Bases extends AppCompatActivity
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
+        //百度
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "blaIiCECLxYpAkvN3ymDd1EM");
+
+        //广告
+        AdManager.getInstance(this).init("dafee4e4fbddda51", "fa76f0b476fbab92", false);
     }
 
     public void Qing(View v)
