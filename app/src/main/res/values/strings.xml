@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">碱基密码</string>
+    <string name="Zimu">字母：</string>
+    <string name="share" tools:ignore="UnusedResources">分享</string>
+    <string name="about">关于</string>
+    <string name="version">版本:</string>
+    <string name="update" tools:ignore="UnusedResources">更新</string>
+    <string name="exit" tools:ignore="UnusedResources">退出</string>
+</resources>
