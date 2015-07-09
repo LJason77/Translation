@@ -1,5 +1,6 @@
 package midsummer.translation;
-
+/*  关于界面
+* */
 import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -33,7 +34,10 @@ public class About extends AppCompatActivity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
+
+        //关闭有米应用日志
         AdManager.getInstance(this).setEnableDebugLog(false);
+
         //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
@@ -43,17 +47,21 @@ public class About extends AppCompatActivity implements View.OnClickListener
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
+        //百度升级
         BDAutoUpdateSDK.silenceUpdateAction(this);
-
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
 
+        //获得版本号
         TextView versionName = (TextView) findViewById(R.id.version);
+        //设置关于页的版本号
         versionName.setText(getVersion());
+
 
         findViewById(R.id.version).setOnClickListener(this);
         findViewById(R.id.support).setOnClickListener(this);
 
+        //显示文字并设置链接
         TextView developer = (TextView) findViewById(R.id.developer);
         //创建一个 SpannableString对象
         SpannableString qq = new SpannableString("作者QQ：951203598");
@@ -64,6 +72,7 @@ public class About extends AppCompatActivity implements View.OnClickListener
         //设置TextView可点击
         developer.setMovementMethod(LinkMovementMethod.getInstance());
 
+        //显示文字并设置链接
         TextView group = (TextView) findViewById(R.id.group);
         //创建一个 SpannableString对象
         SpannableString q = new SpannableString("QQ反馈群：247708078");
@@ -103,6 +112,7 @@ public class About extends AppCompatActivity implements View.OnClickListener
         });
     }
 
+    //点击版本号升级
     public void onClick(View v)
     {
         switch (v.getId())
@@ -111,13 +121,12 @@ public class About extends AppCompatActivity implements View.OnClickListener
                 dialog.show();
                 BDAutoUpdateSDK.uiUpdateAction(this, new Update());
                 break;
-            case R.id.support:
-                break;
             default:
                 break;
         }
     }
 
+    //获得版本号
     private String getVersion()
     {
         try
@@ -133,6 +142,7 @@ public class About extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    //升级
     private class Update implements UICheckUpdateCallback
     {
         @Override

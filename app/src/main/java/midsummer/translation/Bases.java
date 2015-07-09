@@ -1,5 +1,6 @@
 package midsummer.translation;
-
+/*  主页
+* */
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -21,6 +22,7 @@ import net.youmi.android.AdManager;
 
 public class Bases extends AppCompatActivity
 {
+    //声明两个变量
     private String lett = "";
     private String jian = "";
 
@@ -43,7 +45,7 @@ public class Bases extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-// 处理动作按钮的点击事件
+        // 处理动作按钮的点击事件
         switch (item.getItemId())
         {
             case R.id.action_about:
@@ -59,6 +61,8 @@ public class Bases extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bases);
+
+        //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             //透明状态栏
@@ -74,6 +78,7 @@ public class Bases extends AppCompatActivity
         AdManager.getInstance(this).init("dafee4e4fbddda51", "fa76f0b476fbab92", false);
     }
 
+    //以下都是button
     public void Qing(View v)
     {
         TextView letter = (TextView) findViewById(R.id.letter);
