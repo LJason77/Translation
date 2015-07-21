@@ -51,7 +51,6 @@ public class About extends AppCompatActivity implements View.OnClickListener
         versionName.setText(getVersion());
 
         findViewById(R.id.version).setOnClickListener(this);
-        findViewById(R.id.support).setOnClickListener(this);
 
         //显示文字并设置链接
         TextView developer = (TextView) findViewById(R.id.developer);
@@ -74,6 +73,17 @@ public class About extends AppCompatActivity implements View.OnClickListener
         group.setText(q);
         //设置TextView可点击
         group.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //显示文字并设置链接
+        TextView github = (TextView) findViewById(R.id.github);
+        //创建一个 SpannableString对象
+        SpannableString git = new SpannableString("获得源码：Translation");
+        //设置超链接
+        git.setSpan(new URLSpan("https://github.com/18312847646/Translation.git"), 5, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //SpannableString对象设置给TextView
+        github.setText(git);
+        //设置TextView可点击
+        github.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     //点击版本号升级
