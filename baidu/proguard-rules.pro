@@ -15,6 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--libraryjars libs/pushservice-VERSION.jar
--dontwarn com.baidu.**
--keep class com.baidu.**{*; }

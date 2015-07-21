@@ -1,6 +1,8 @@
 package midsummer.translation;
-/*  关于界面
-* */
+/*
+ * 关于界面
+ */
+
 import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,16 +15,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
-
-import net.youmi.android.AdManager;
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
-import net.youmi.android.banner.AdViewListener;
 
 public class About extends AppCompatActivity implements View.OnClickListener
 {
@@ -34,9 +30,6 @@ public class About extends AppCompatActivity implements View.OnClickListener
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-
-        //关闭有米应用日志
-        AdManager.getInstance(this).setEnableDebugLog(false);
 
         //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -56,7 +49,6 @@ public class About extends AppCompatActivity implements View.OnClickListener
         TextView versionName = (TextView) findViewById(R.id.version);
         //设置关于页的版本号
         versionName.setText(getVersion());
-
 
         findViewById(R.id.version).setOnClickListener(this);
         findViewById(R.id.support).setOnClickListener(this);
@@ -82,34 +74,6 @@ public class About extends AppCompatActivity implements View.OnClickListener
         group.setText(q);
         //设置TextView可点击
         group.setMovementMethod(LinkMovementMethod.getInstance());
-
-        //广告
-        // 实例化广告条
-        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-        // 获取要嵌入广告条的布局
-        LinearLayout adLayout = (LinearLayout) findViewById(R.id.adLayout);
-        // 将广告条加入到布局中
-        adLayout.addView(adView);
-        adView.setAdListener(new AdViewListener()
-        {
-            @Override
-            public void onSwitchedAd(AdView adView)
-            {
-                // 切换广告并展示
-            }
-
-            @Override
-            public void onReceivedAd(AdView adView)
-            {
-                // 请求广告成功
-            }
-
-            @Override
-            public void onFailedToReceivedAd(AdView adView)
-            {
-                // 请求广告失败
-            }
-        });
     }
 
     //点击版本号升级

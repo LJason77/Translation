@@ -1,6 +1,8 @@
 package midsummer.translation;
-/*  主页
-* */
+/*
+ * 主页
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -17,8 +19,6 @@ import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-
-import net.youmi.android.AdManager;
 
 public class Bases extends AppCompatActivity
 {
@@ -73,9 +73,6 @@ public class Bases extends AppCompatActivity
 
         //百度
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "blaIiCECLxYpAkvN3ymDd1EM");
-
-        //广告
-        AdManager.getInstance(this).init("dafee4e4fbddda51", "fa76f0b476fbab92", false);
     }
 
     //以下都是button
