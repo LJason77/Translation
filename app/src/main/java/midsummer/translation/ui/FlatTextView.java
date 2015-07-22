@@ -1,10 +1,12 @@
 package midsummer.translation.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class FlatTextView extends TextView implements Attributes.AttributeChange
         init(attrs);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void init(AttributeSet attrs)
     {
 
@@ -100,7 +103,7 @@ public class FlatTextView extends TextView implements Attributes.AttributeChange
         }
         gradientDrawable.setCornerRadius(attributes.getRadius());
         gradientDrawable.setStroke(attributes.getBorderWidth(), attributes.getColor(textColor));
-        setBackgroundDrawable(gradientDrawable);
+        setBackground(gradientDrawable);
 
         // setting the text color only if there is no android:textColor attribute used
         // 如果没有使用android:textColor属性则设置文本颜色
