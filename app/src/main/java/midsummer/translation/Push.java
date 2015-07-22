@@ -1,7 +1,8 @@
 package midsummer.translation;
 /*
-*   此类为百度推送
-* */
+ *   此类为百度推送
+ */
+
 import android.content.Context;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
