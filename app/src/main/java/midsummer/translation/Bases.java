@@ -5,9 +5,13 @@ package midsummer.translation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,18 +30,16 @@ public class Bases extends AppCompatActivity
     private String lett = "";
     private String jian = "";
 
-    private static void copy(String content, Context context)
-    {
-        // 得到剪贴板管理器
-        @SuppressWarnings("deprecation") ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        cmb.setText(content.trim());
-    }
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bases);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -50,14 +52,24 @@ public class Bases extends AppCompatActivity
 
         //百度
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "blaIiCECLxYpAkvN3ymDd1EM");
+
+        // 打開 up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        // 實作 drawer toggle 並放入 toolbar
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,R.string.open,R.string.close);
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // 为ActionBar扩展菜单项
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bases_actions, menu);
+        inflater.inflate(R.menu.bases, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -67,12 +79,28 @@ public class Bases extends AppCompatActivity
         // 处理动作按钮的点击事件
         switch (item.getItemId())
         {
-            case R.id.action_about:
-                Intent intent = new Intent(this, About.class);
-                startActivity(intent);
+			case R.id.score:
+				Uri uri = Uri.parse("market://details?id="+getPackageName());
+				Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+                return true;
+			case R.id.theme:
+                return true;
+/*            case R.id.about:
+                Intent intenta = new Intent(this, About.class);
+                startActivity(intenta);
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private static void copy(String content, Context context)
+    {
+        // 得到剪贴板管理器
+        @SuppressWarnings("deprecation") ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(content.trim());
     }
 
     //以下都是button
