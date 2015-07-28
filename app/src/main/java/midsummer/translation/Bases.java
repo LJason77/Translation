@@ -3,8 +3,11 @@ package midsummer.translation;
  * 主页
  */
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +16,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,15 +30,25 @@ import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 
-public class Bases extends AppCompatActivity
+public class Bases extends AppCompatActivity implements View.OnClickListener
 {
-    //声明两个变量
+	private ProgressDialog dialog;
+	//声明两个变量
     private String lett = "";
     private String jian = "";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+	private static void copy(String content, Context context)
+	{
+		// 得到剪贴板管理器
+		@SuppressWarnings("deprecation") ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+		cmb.setText(content.trim());
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +69,10 @@ public class Bases extends AppCompatActivity
 
         //百度
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "blaIiCECLxYpAkvN3ymDd1EM");
+		//百度升级
+		BDAutoUpdateSDK.silenceUpdateAction(this);
+		dialog = new ProgressDialog(this);
+		dialog.setIndeterminate(true);
 
         // 打開 up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,8 +82,45 @@ public class Bases extends AppCompatActivity
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-    }
+		//获得版本号
+		TextView versionName = (TextView) findViewById(R.id.version);
+		//设置关于页的版本号
+		versionName.setText(getVersion());
+		findViewById(R.id.version).setOnClickListener(this);
 
+		//显示文字并设置链接
+		TextView developer = (TextView) findViewById(R.id.developer);
+		//创建一个 SpannableString对象
+		SpannableString qq = new SpannableString("作者QQ：951203598");
+		//设置超链接
+		qq.setSpan(new URLSpan("http://qm.qq.com/cgi-bin/qm/qr?k=-0A4UCeLbqT2fqA2uVTcXoHtFXW36tE7"), 5, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		//SpannableString对象设置给TextView
+		developer.setText(qq);
+		//设置TextView可点击
+		developer.setMovementMethod(LinkMovementMethod.getInstance());
+
+		//显示文字并设置链接
+		TextView group = (TextView) findViewById(R.id.group);
+		//创建一个 SpannableString对象
+		SpannableString q = new SpannableString("QQ反馈群：247708078");
+		//设置超链接
+		q.setSpan(new URLSpan("http://qm.qq.com/cgi-bin/qm/qr?k=Oi8I9tFyxfvyOugCzIAfLotzC0GZBTIf"), 6, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		//SpannableString对象设置给TextView
+		group.setText(q);
+		//设置TextView可点击
+		group.setMovementMethod(LinkMovementMethod.getInstance());
+
+		//显示文字并设置链接
+		TextView github = (TextView) findViewById(R.id.github);
+		//创建一个 SpannableString对象
+		SpannableString git = new SpannableString("获得源码：Translation");
+		//设置超链接
+		git.setSpan(new URLSpan("https://github.com/18312847646/Translation.git"), 5, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		//SpannableString对象设置给TextView
+		github.setText(git);
+		//设置TextView可点击
+		github.setMovementMethod(LinkMovementMethod.getInstance());
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -96,12 +154,35 @@ public class Bases extends AppCompatActivity
         }
     }
 
-    private static void copy(String content, Context context)
-    {
-        // 得到剪贴板管理器
-        @SuppressWarnings("deprecation") ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        cmb.setText(content.trim());
-    }
+	//获得版本号
+	private String getVersion()
+	{
+		try
+		{
+			PackageManager manager = this.getPackageManager();
+			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+			String version = info.versionName;
+			return this.getString(R.string.version) + version;
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+			return this.getString(R.string.version);
+		}
+	}
+
+	//点击版本号升级
+	public void onClick(View v)
+	{
+		switch(v.getId())
+		{
+			case R.id.version:
+				dialog.show();
+				BDAutoUpdateSDK.uiUpdateAction(this, new Update());
+				break;
+			default:
+				break;
+		}
+	}
 
     //以下都是button
     public void Qing(View v)
@@ -532,4 +613,14 @@ public class Bases extends AppCompatActivity
         jian = jian.concat(p);
         jj.setText(jian);
     }
+
+	//升级
+	private class Update implements UICheckUpdateCallback
+	{
+		@Override
+		public void onCheckComplete()
+		{
+			dialog.dismiss();
+		}
+	}
 }
