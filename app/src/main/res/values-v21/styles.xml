@@ -1,9 +1,14 @@
 <resources>
-
     <style name="AppTheme" parent="AppTheme.Base">
         <!--Navigation bar color-->
         <item name="android:navigationBarColor">@color/theme2_darker_color</item><!--Status bar color-->
         <item name="android:statusBarColor">#88009688</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 </resources>
 

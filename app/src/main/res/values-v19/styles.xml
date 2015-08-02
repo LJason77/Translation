@@ -1,18 +1,16 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
-        <!-- Customize your theme here. -->
-    </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--    ToolBar（Actionbar）颜色    -->
+        <!--   动作条   -->
         <item name="colorPrimary">@color/theme2_primary_color</item>
-        <!--St    状态栏颜色    -->
+        <!--Status bar color-->
         <item name="colorPrimaryDark">@color/theme2_darker_color</item>
-        <!--    窗口的背景颜色    -->
+        <!--Window color-->
         <item name="android:windowBackground">@color/dim_foreground_material_dark</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="Theme.Dialog" parent="android:style/Theme.Dialog">
